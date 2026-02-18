@@ -17,6 +17,8 @@ services:
     ports:
       - "3000:3000"
     environment:
+      # Bind to IPv4 explicitly (Nitro >= 2.9 defaults to :: which can confuse Docker)
+      HOST: "0.0.0.0"
       # SSR calls (inside Docker network) reach the backend via service name
       NUXT_API_BASE: http://backend:8000
       # Browser calls reach the backend via the host machine's exposed port

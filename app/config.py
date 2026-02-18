@@ -19,5 +19,8 @@ class Settings(BaseSettings):
     # Heroku Postgres (optional; written by /db-connection/save)
     database_url: Optional[str] = None
 
+    # Stripe (optional; needed for live customer/payment/invoice data)
+    stripe_secret_key: Optional[str] = None
+
 
 settings = Settings()

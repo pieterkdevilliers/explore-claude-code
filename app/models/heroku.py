@@ -56,3 +56,20 @@ class HChatMessage(HerokuBase):
     message_text: Mapped[str] = mapped_column(String)
     timestamp: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     source_files: Mapped[Optional[List]] = mapped_column(JSON, nullable=True)
+
+
+class HStripeSubscription(HerokuBase):
+    __tablename__ = "stripesubscription"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    account_unique_id: Mapped[Optional[str]] = mapped_column(String, nullable=True, index=True)
+    stripe_subscription_id: Mapped[str] = mapped_column(String, unique=True, index=True)
+    stripe_customer_id: Mapped[str] = mapped_column(String, unique=True, index=True)
+    status: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    current_period_end: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+    type: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    trial_start: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+    trial_end: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+    subscription_start: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+    stripe_account_url: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    related_product_title: Mapped[Optional[str]] = mapped_column(String, nullable=True)
