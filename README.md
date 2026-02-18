@@ -15,8 +15,8 @@ docker compose -f docker-compose.local.yml logs -f
 
 # Stop containers
 docker compose -f docker-compose.local.yml down
-First time only — create the superuser while containers are running:
 
+# First time only — create the superuser while containers are running:
 
 docker compose -f docker-compose.local.yml exec backend uv run python create_superuser.py
 Then visit http://localhost:3000.
