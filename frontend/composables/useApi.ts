@@ -7,8 +7,12 @@ import type { UseFetchOptions } from 'nuxt/app'
 export function useApi<T>(path: string, options: UseFetchOptions<T> = {}) {
   const config = useRuntimeConfig()
   const authStore = useAuthStore()
+  // During SSR (inside Docker), use the private server-side base so the Nuxt
+  // server can reach the backend container via Docker's internal network.
+  // In the browser, always use the public base (reachable from the host machine).
+  const base = (import.meta.server && config.apiBase) ? config.apiBase : config.public.apiBase
 
-  return useFetch<T>(`${config.public.apiBase}${path}`, {
+  return useFetch<T>(`${base}${path}`, {
     ...options,
     headers: {
       ...(options.headers as Record<string, string> | undefined),

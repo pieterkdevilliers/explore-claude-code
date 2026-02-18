@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    env_file: .env          # picks up SECRET_KEY, DATABASE_URL, etc.
+    volumes:
+      - ./local.db:/app/local.db   # persist the SQLite admin users DB
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # SSR calls (inside Docker network) reach the backend via service name
+      NUXT_API_BASE: http://backend:8000
+      # Browser calls reach the backend via the host machine's exposed port
+      NUXT_PUBLIC_API_BASE: http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped

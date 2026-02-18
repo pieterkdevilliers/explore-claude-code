@@ -6,8 +6,10 @@ export default defineNuxtConfig({
   modules: ['./modules/tailwind-postcss-fix', '@nuxt/ui', '@pinia/nuxt'],
 
   runtimeConfig: {
+    // Server-side only — override with NUXT_API_BASE (used for SSR calls inside Docker)
+    apiBase: '',
     public: {
-      // Override with NUXT_PUBLIC_API_BASE env var
+      // Client-side (browser) — override with NUXT_PUBLIC_API_BASE
       apiBase: 'http://localhost:8000',
     },
   },
